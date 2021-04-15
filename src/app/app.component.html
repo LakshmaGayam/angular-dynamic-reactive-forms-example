@@ -1,0 +1,13 @@
+<form [formGroup]="addForm">
+  <div formArrayName="address">
+    <!-- ngFor Must Be Inside formArrayName div -->
+    <div *ngFor="let address1 of addForm.controls.address['controls'] ; let i =index" [formGroupName]="i">
+      <input type="text" formControlName="city"   name="city{{i}}">
+      <input type="text" formControlName="phone"  name="phone{{i}}">
+      <button (click)="addAddress()">Add</button>
+      <button *ngIf="addForm.controls.address['controls'].length > 1"(click)="removeAddress(i)">Remove</button>
+
+    </div>
+  </div>
+  <button (click)="submit()">Submit</button>
+</form>
