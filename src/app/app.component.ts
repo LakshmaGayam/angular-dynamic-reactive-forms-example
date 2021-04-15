@@ -9,12 +9,17 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 export class AppComponent implements OnInit {
 
   addForm: FormGroup;
+  details = [{ city: 'Hyderabad', phone: '741852963' }, { city: 'Chennai', phone: '7894561236' }]
   constructor(private fb: FormBuilder) {
 
   }
 
   ngOnInit() {
     this.buildForm();
+    if (this.details) {
+      // populate details in findby id uncomment this to populate data
+      // this.addForm.setControl('address',this.setDetailsDynamically());
+    }
   }
 
   buildForm() {
@@ -48,5 +53,19 @@ export class AppComponent implements OnInit {
   submit() {
     console.log(this.addForm.value)
     console.log(this.addForm.controls.address.value)
+  }
+
+
+  setDetailsDynamically(): FormArray {
+    const formArray = new FormArray([]);
+    this.details.forEach(item => {
+      if (item) {
+        formArray.push(this.fb.group({
+          city: item.city,
+          phone: item.phone
+        }))
+      }
+    })
+    return formArray;
   }
 }
